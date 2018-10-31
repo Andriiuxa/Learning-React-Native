@@ -8,15 +8,18 @@ import {
 
 export const facebookLogin = () => async dispatch => {
     let token = await AsyncStorage.getItem('fb_token');
+
     if (token) { 
+        // Dispatch an action saying FB login is done
         dispatch({ type: FACEBOOK_LOGIN_SUCCESS, payload: token });
     } else {
+        // Start up FB Login process
         doFacebookLogin(dispatch);
     }
 }
 
 const doFacebookLogin = async dispatch => {
-    let { type, token } = await Facebook.logInInWithReadPermissionsAsync('792442691100913', {
+    let { type, token } = await Facebook.logInWithReadPermissionsAsync('792442691100913', {
         permissions: ['public_profile']
     });
 
@@ -25,5 +28,5 @@ const doFacebookLogin = async dispatch => {
     }
 
     await AsyncStorage.setItem('fb_token', token);
-    dispatch({ type: FACEBOOK_LOGIN_SUCCESS, payload: tolen });
+    dispatch({ type: FACEBOOK_LOGIN_SUCCESS, payload: token });
 };
