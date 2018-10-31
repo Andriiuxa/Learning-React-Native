@@ -8,6 +8,7 @@ import {
 
 export const facebookLogin = () => async dispatch => {
     let token = await AsyncStorage.getItem('fb_token');
+    console.log(token);
 
     if (token) { 
         // Dispatch an action saying FB login is done
